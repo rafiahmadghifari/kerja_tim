@@ -1,11 +1,3 @@
-<?php
-// Pastikan $dataKegiatan telah ada sebelum mencoba mengambil data yang akan diedit.
-// Misalnya, Anda telah mengisi $dataKegiatan dengan data-data sebelumnya.
-$dataKegiatan = [
-    // ... Data-data sebelumnya
-];
-?>
-// Inisialisasi $dataToEdit agar tidak menghasilkan kesalahan jika tidak ada $_GET['id'] yang sesuai.
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,37 +51,23 @@ $dataKegiatan = [
     <h3>Edit Kegiatan</h3>
 
     <?php
+    $dataKegiatan = loadKegiatanData();
+
     $id = $_GET['id'];
-    // Pastikan ID valid, misalnya, apakah ID tersebut ada dalam array $dataKegiatan.
+    
+    // Pastikan ID valid, misalnya, apakah ID tersebut ada dalam array $dataKegiatan (yang akan didefinisikan di "prosesedit.php").
     if (array_key_exists($id, $dataKegiatan)) {
         $dataToEdit = $dataKegiatan[$id];
     } else {
         echo "ID tidak valid.";
         exit;
     }
-
-    // Proses form edit
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Perbarui data sesuai input dari formulir
-        $dataToEdit['nama'] = $_POST['nama'];
-        $dataToEdit['jurusan'] = $_POST['jurusan'];
-        $dataToEdit['kehadiran'] = $_POST['kehadiran'];
-        $dataToEdit['jamMasuk'] = $_POST['jamMasuk'];
-        $dataToEdit['jamPulang'] = $_POST['jamPulang'];
-        $dataToEdit['tanggal'] = $_POST['tanggal'];
-
-        // Simpan kembali data yang sudah diperbarui ke dalam array
-        $dataKegiatan[$id] = $dataToEdit;
-
-        // Redirect kembali ke halaman kegiatan.php
-        header("Location: kegiatan.php");
-        exit;
-    }
     ?>
 
     <!-- Form untuk mengedit data -->
     <div class="form">
-        <form action="" method="post">
+        <form action="prosesedit.php" method="post">
+            <input type="hidden" name="id" value="<?php echo $id; ?>">
             <label for="nama">Nama:</label>
             <input type="text" name="nama" value="<?php echo $dataToEdit['nama']; ?>"><br>
 

@@ -1,9 +1,9 @@
 <?php
-// Jika Anda memiliki $dataKegiatan sebelumnya, Anda bisa menggunakannya di sini.
-// Pastikan data sudah ada sebelum mencoba mengedit.
+// Pastikan Anda memiliki $dataKegiatan sebelumnya.
+// Misalnya, Anda telah mengisi $dataKegiatan dengan data-data sebelumnya.
 
 // Proses edit data
-if (isset($_POST['id'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['id'];
 
     // Pastikan ID valid, misalnya, apakah ID tersebut ada dalam array $dataKegiatan.
@@ -22,7 +22,7 @@ if (isset($_POST['id'])) {
         $dataKegiatan[$id] = $dataToEdit;
 
         // Redirect kembali ke halaman kegiatan.php
-        header("Location: kegiatan.php");
+        header("Location: absen.php");
         exit;
     } else {
         echo "ID tidak valid.";

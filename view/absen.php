@@ -52,65 +52,70 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kegiatan</title>
-    <style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- <style>
         /* CSS untuk latar belakang tabel */
-        body {
-            background-color: #f0f0f0;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-        }
+       /* CSS untuk latar belakang tabel */
+body {
+    background-color: #f0f0f0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
 
-        /* CSS untuk tombol "Tambah Data" */
-        .button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 10px 5px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+/* CSS untuk tombol */
+.button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
 
-        /* CSS untuk tabel */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background-color: #ccc;
-        }
+/* CSS untuk tabel */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Tambahkan bayangan untuk tampilan elegan */
+    border-radius: 5px;
+}
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
 
-        th {
-            background-color: #007bff;
-            color: white;
-        }
+th {
+    background-color: #007bff;
+    color: white;
+}
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
 
         /* CSS untuk form tambah data yang awalnya disembunyikan */
         #tambahDataForm {
             display: none;
-            background-color: #fff;
+            background-color: #E3E1E1;
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
             margin-top: 20px;
+            position: relative;
         }
 
         #tambahDataForm h3 {
-            font-size: 20px;
+            font-size: 15px;
             margin-bottom: 10px;
         }
 
@@ -153,6 +158,16 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])
             border-radius: 5px;
         }
 
+        /* CSS untuk tombol "Kembali" (X) */
+        #kembaliButton {
+            position: absolute;
+            top: 10px; /* Jarak dari atas */
+            right: 10px; /* Jarak dari kanan */
+            font-size: 20px;
+            cursor: pointer;
+            display: none; /* Tombol ini awalnya disembunyikan */
+        }
+
         /* Ganti warna latar belakang tombol "Edit" menjadi biru */
         .edit-button {
             background-color: blue;
@@ -185,54 +200,145 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])
             #tambahDataForm input[type="date"],
             #tambahDataForm input[type="time"] {
                 font-size: 14px;
+                width: 100%;
             }
+
+            /* Mengatur ulang lebar elemen-elemen pada layar kecil */
+            th, td {
+                width: auto;
+                display: block;
+                padding: 4px;
+            }
+
+            /* Menambahkan garis bawah untuk baris tabel */
+            tr {
+                border-bottom: 1px solid #ddd;
+                margin-bottom: 10px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* Menambahkan margin antara baris */
+            tr:last-child {
+                margin-bottom: 0;
+            }
+
+            /* Menyembunyikan header tabel */
+            th {
+                display: none;
+            }
+
+            /* Menyembunyikan label pada form tambah data */
+            #tambahDataForm label {
+                display: block;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
+            /* Menampilkan tombol "Tambah Data" pada layar kecil */
+            .button {
+                display: inline-block;
+            }
+
+            /* Menyembunyikan checkbox label */
+            #tambahDataForm label.checkbox-label {
+                display: none;
+            }
+
+            /* Menampilkan checkbox dan label pada form tambah data */
+            #tambahDataForm input[type="checkbox"] {
+                display: inline-block;
+                margin-right: 5px;
+            }
+            /* CSS untuk mode terang */
+            .light-mode {
+                background-color: #fff;
+                color: #333;
+            }
+
+            /* CSS untuk tombol mode gelap dan terang */
+            .mode-toggle {
+                background-color: transparent;
+                color: #333;
+                border: none;
+                cursor: pointer;
+            }
+
         }
-    </style>
+
+        
+    </style> -->
 </head>
 <body>
-    <h3>Absensi</h3>
+    <h3>Absensi
+<button id="modeToggle" class="mode-toggle">
+    <i class="fas fa-moon"></i>
+</button>
+</h3>
 
     <!-- Tombol "Tambah Data" yang akan menampilkan form tambah data -->
-    <button class="button" id="tambahDataButton">Tambah Data</button>
+    <button class="button" id="tambahDataButton" style="background-color: #008000;">Tambah Data</button>
 
     <!-- Form tambah data -->
-    <div id="tambahDataForm">
-        <h3>Tambah Data Absen</h3>
-        <form action="absen.php" method="post">
-            <label for="nama">Nama:</label>
-            <input type="text" id="nama" name="nama"><br><br>
-
-            <label>Jurusan:</label>
-            <label>
-                <input type="checkbox" name="jurusan[]" value="RPL"> RPL
-            </label>
-            <label>
-                <input type="checkbox" name="jurusan[]" value="TBSM"> TBSM
-            </label>
-            <label>
-                <input type="checkbox" name="jurusan[]" value="ATPH"> ATPH
-            </label><br><br>
-
-            <label for="kehadiran">Kehadiran:</label>
-            <input type="checkbox" id="hadir" name="kehadiran[]" value="Hadir">
-            <label for="hadir">Hadir</label>
-            <input type="checkbox" id="izin" name="kehadiran[]" value="Izin">
-            <label for="izin">Izin</label>
-            <input type="checkbox" id="tanpaKeterangan" name="kehadiran[]" value="Tanpa Keterangan">
-            <label for="tanpaKeterangan">Alfa</label><br><br>
-
-            <label for="tanggal">Tanggal:</label>
-            <input type="date" id="tanggal" name="tanggal"><br><br>
-
-            <label for="jamMasuk">Jam Masuk:</label>
-            <input type="time" id="jamMasuk" name="jamMasuk"><br><br>
-
-            <label for="jamPulang">Jam Pulang:</label>
-            <input type="time" id="jamPulang" name="jamPulang"><br><br>
-
-            <input type="submit" value="Simpan Data">
-        </form>
+<div id="tambahDataForm">
+    <h3>Tambah Data Absen</h3>
+    <form action="absen.php" method="post">
+        <div id="kembaliButton" onclick="toggleTambahDataForm()">&#10006;</div>
+        <div class="form-group">
+    <label for="nama">Nama:</label>
+    <input type="text" id="nama" name="nama" required>
+</div>
+        <div class="form-group">
+    <label for="jurusan">Jurusan:</label>
+    <div class="checkbox-group">
+        <label for="jurusanRPL">
+            <input type="checkbox" id="jurusanRPL" name="jurusan[]" value="RPL" title="Rekayasa Perangkat Lunak"> RPL
+        </label>
+        <label for="jurusanTBSM">
+            <input type="checkbox" id="jurusanTBSM" name="jurusan[]" value="TBSM" title="Teknik Bisnis Sepeda Motor"> TBSM
+        </label>
+        <label for="jurusanATPH">
+            <input type="checkbox" id="jurusanATPH" name="jurusan[]" value="ATPH" title="Agribisnis Tanaman Pangan dan Holtikultura"> ATPH
+        </label>
     </div>
+</div>
+
+<div class="form-group">
+    <label for="kehadiran">Kehadiran:</label>
+    <div class="checkbox-group">
+        <label for="hadir">
+            <input type="checkbox" id="hadir" name="kehadiran[]" value="Hadir" title="Hadir">Hadir
+        </label>
+        <label for="izin">
+            <input type="checkbox" id="izin" name="kehadiran[]" value="Izin" title="Izin">Izin
+        </label>
+        <label for="tanpaKeterangan">
+            <input type="checkbox" id="tanpaKeterangan" name="kehadiran[]" value="Tanpa Keterangan" title="Alfa">Alfa
+        </label>
+    </div>
+</div>
+
+        <div class="form-group">
+            <label for="tanggal">Tanggal:</label>
+            <input type="date" id="tanggal" name="tanggal">
+        </div>
+        
+        <div class="form-group">
+            <label for="jamMasuk">Jam Masuk:</label>
+            <input type="time" id="jamMasuk" name="jamMasuk">
+        </div>
+
+        <div class="form-group">
+            <label for="jamPulang">Jam Pulang:</label>
+            <input type="time" id="jamPulang" name="jamPulang">
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Simpan Data">
+        </div>
+    </form>
+</div>
+
 
     <!-- Tabel untuk menampilkan data -->
     <table>
@@ -271,15 +377,40 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])
         // Ambil elemen-elemen yang dibutuhkan
         const tambahDataButton = document.getElementById("tambahDataButton");
         const tambahDataForm = document.getElementById("tambahDataForm");
+        const kembaliButton = document.getElementById("kembaliButton");
 
         // Tambahkan event listener untuk tombol "Tambah Data"
         tambahDataButton.addEventListener("click", function() {
-            if (tambahDataForm.style.display === "none") {
+            if (tambahDataForm.style.display === "none" || getComputedStyle(tambahDataForm).display === "none") {
                 tambahDataForm.style.display = "block";
+                kembaliButton.style.display = "inline-block"; // Tampilkan tombol "Kembali"
             } else {
                 tambahDataForm.style.display = "none";
+                kembaliButton.style.display = "none"; // Sembunyikan tombol "Kembali"
             }
         });
+
+        // Tambahkan event listener untuk tombol "Kembali"
+        kembaliButton.addEventListener("click", function() {
+            tambahDataForm.style.display = "none";
+            kembaliButton.style.display = "none"; // Sembunyikan tombol "Kembali"
+        });
+
+        const modeToggle = document.getElementById("modeToggle");
+        const body = document.body;
+
+    // Event listener untuk tombol mode gelap/terang
+    modeToggle.addEventListener("click", function () {
+        if (body.classList.contains("dark-mode")) {
+            // Saat ini dalam mode gelap, ganti ke mode terang
+            body.classList.remove("dark-mode");
+            modeToggle.innerHTML = '<i class="fas fa-sun"></i> '; // Ganti ikon dan teks
+        } else {
+            // Saat ini dalam mode terang, ganti ke mode gelap
+            body.classList.add("dark-mode");
+            modeToggle.innerHTML = '<i class="fas fa-moon"></i> '; // Ganti ikon dan teks
+        }console.log("Tombol mode gelap/terang ditekan");
+    });
     </script>
 </body>
 </html>
