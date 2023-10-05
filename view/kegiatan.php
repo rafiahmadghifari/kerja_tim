@@ -1,33 +1,33 @@
 <?php
-// Array data kegiatan (contoh)
-$dataKegiatan = [];
+// Mulai sesi
+session_start();
 
 // Fungsi untuk menghapus data berdasarkan ID
 function hapusData($id) {
-    global $dataKegiatan;
-    if (isset($dataKegiatan[$id])) {
-        unset($dataKegiatan[$id]);
+    if (isset($_SESSION['dataKegiatan'][$id])) {
+        unset($_SESSION['dataKegiatan'][$id]);
     }
 }
 
 // Fungsi untuk mengambil data berdasarkan ID
 function getData($id) {
-    global $dataKegiatan;
-    if (isset($dataKegiatan[$id])) {
-        return $dataKegiatan[$id];
+    if (isset($_SESSION['dataKegiatan'][$id])) {
+        return $_SESSION['dataKegiatan'][$id];
     }
     return null;
 }
 
 // Fungsi untuk menyimpan data kegiatan
 function tambahData($data) {
-    global $dataKegiatan;
-    
+    if (!isset($_SESSION['dataKegiatan'])) {
+        $_SESSION['dataKegiatan'] = [];
+    }
+
     // Generate ID unik untuk data baru
     $id = uniqid();
     
     // Simpan data kegiatan dengan ID unik
-    $dataKegiatan[$id] = $data;
+    $_SESSION['dataKegiatan'][$id] = $data;
     
     return $id; // Mengembalikan ID dari data yang baru disimpan
 }
@@ -58,6 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 5px;
             margin-top: 20px;
             width: 400px; /* Lebar form 
-            display: none; /* Form awalnya disembunyikan */
+            display: none; /* Form awalnya disembunyikan 
         }
 
         /* CSS untuk tabel *
@@ -188,7 +189,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <tbody>
             <?php
             // Menampilkan data dari array $dataKegiatan ke dalam tabel
-            foreach ($dataKegiatan as $id => $data) {
+            if (isset($_SESSION['dataKegiatan'])) {
+                foreach ($_SESSION['dataKegiatan'] as $id => $data) {
+            
                 echo "<tr>";
                 echo "<td>" . $data["nama"] . "</td>";
                 echo "<td>" . $data["hari"] . "</td>";
@@ -198,6 +201,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "<td><a href='editkegiatan.php?id=$id'><button class='aksi-button'>Edit</button></a> | <a href='kegiatan.php?action=delete&id=$id'><button class='aksi-button'>Hapus</button></a></td>";
                 echo "</tr>";
             }
+
+        }
             ?>
         </tbody>
     </table>
